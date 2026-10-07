@@ -1,11 +1,21 @@
+using backend.Configurations;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<AppConfig>(builder.Configuration.GetSection("AppConfig"));
+
+var appConfig = new AppConfig();
+
+var origins = appConfig.AllowedOrigins.Count > 0 
+  ? appConfig.AllowedOrigins.ToArray() 
+  : ["http://localhost:4200"];
 
 builder.Services.AddCors(options =>
 {
   options.AddPolicy("AllowAngularApp",
     policy =>
     {
-      policy.WithOrigins("http://localhost:4200")
+      policy.WithOrigins(appConfig.AllowedOrigins.ToArray())
         .AllowAnyHeader()
         .AllowAnyMethod();
     });
