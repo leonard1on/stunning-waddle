@@ -7,13 +7,17 @@
 /.angular/
 .angular/
 
+# ASP.NET Core specific
+/backend/bin/
+/backend/obj/
+
 # Node modules and dependency files
 /node_modules/
 /package-lock.json
 /yarn.lock
 
 # Environment files
-/.env
+*/.env
 
 # Angular CLI and build artefacts
 /.angular-cli.json
