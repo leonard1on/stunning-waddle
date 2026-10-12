@@ -4,6 +4,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<AppConfig>(builder.Configuration.GetSection("AppConfig"));
 
+builder.Services.AddHttpClient("OpenWeather", client =>
+{
+  client.BaseAddress = new Uri("https://api.openweathermap.org/data/2.5/");
+});
+
 var appConfig = new AppConfig();
 
 var origins = appConfig.AllowedOrigins.Count > 0 
