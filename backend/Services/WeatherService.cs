@@ -24,4 +24,22 @@ public class WeatherService : IWeatherService
         var weatherData = await response.Content.ReadFromJsonAsync<WeatherDataDTO>();
         return weatherData ?? new WeatherDataDTO();
     }
+
+    public async Task<List<GeoDataDTO>> GetGeoDataAsync(string cityName)
+    {
+        var response = await _httpClient.GetAsync($"{_openWeatherConfig.GeoAddress}?q={cityName}&appid={_openWeatherConfig.ApiKey}");
+        response.EnsureSuccessStatusCode();
+
+        var geoData = await response.Content.ReadFromJsonAsync<List<GeoDataDTO>>();
+        return geoData ?? new List<GeoDataDTO>();
+    }
+
+    public async Task<WeatherDataDTO> GetWeatherByCityNameAsync(string cityName)
+    {
+        var reesponse = await _httpClient.GetAsync($"{_openWeatherConfig.WeatherAddress}?q={cityName}&appid={_openWeatherConfig.ApiKey}&units=metric");
+        reesponse.EnsureSuccessStatusCode();
+
+        var weatherData = await reesponse.Content.ReadFromJsonAsync<WeatherDataDTO>(); 
+        return weatherData ?? new WeatherDataDTO();
+    }
 }

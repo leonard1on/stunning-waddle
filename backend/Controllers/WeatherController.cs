@@ -23,4 +23,28 @@ public class WeatherController : ControllerBase
         var weatherData = await _weatherService.GetWeatherAsync(lat, lon);
         return Ok(weatherData);
     }
+
+    [HttpGet("geo")]
+    public async Task<IActionResult> GetGeoData([FromQuery] string cityName)
+    {
+        if (string.IsNullOrWhiteSpace(cityName))
+        {
+            return BadRequest("City name parameter is required.");
+        }
+
+        var geoData = await _weatherService.GetGeoDataAsync(cityName);
+        return Ok(geoData);
+    }
+
+    [HttpGet("city")]
+    public async Task<IActionResult> GetWeatherByCityName([FromQuery] string cityName)
+    {
+        if (string.IsNullOrWhiteSpace(cityName))
+        {
+            return BadRequest("City name parameter is required.");
+        }
+
+        var weatherData = await _weatherService.GetWeatherByCityNameAsync(cityName);
+        return Ok(weatherData);
+    }
 }
