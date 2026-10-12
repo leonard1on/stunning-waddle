@@ -2,14 +2,13 @@ using backend.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var appConfig = builder.Configuration.GetSection("AppConfig").Get<AppConfig>() ?? new AppConfig();
 builder.Services.Configure<AppConfig>(builder.Configuration.GetSection("AppConfig"));
 
 builder.Services.AddHttpClient("OpenWeather", client =>
 {
-  client.BaseAddress = new Uri("https://api.openweathermap.org/data/2.5/");
+  client.BaseAddress = new Uri(appConfig.OpenWeather.BaseUrl);
 });
-
-var appConfig = new AppConfig();
 
 var origins = appConfig.AllowedOrigins.Count > 0 
   ? appConfig.AllowedOrigins.ToArray() 
@@ -20,7 +19,7 @@ builder.Services.AddCors(options =>
   options.AddPolicy("AllowAngularApp",
     policy =>
     {
-      policy.WithOrigins(appConfig.AllowedOrigins.ToArray())
+      policy.WithOrigins(origins)
         .AllowAnyHeader()
         .AllowAnyMethod();
     });
@@ -29,6 +28,7 @@ builder.Services.AddCors(options =>
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IWeatherService, WeatherService>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
