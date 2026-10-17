@@ -57,3 +57,37 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## File Structure Tree Example
+
+- App
+    - core
+        weather.api.service.ts
+        auth.api.service.ts
+    - shared
+        - components
+            navbar
+            footer
+            layout
+    - features
+        - dashboard
+            dashboard.ts
+            dashboard.css
+            dashboard.html
+            dashboard.spec
+            <!-- dashboard-routes.ts -->
+        - weather
+            weather.ts
+            weather.css
+            weather.html
+            weather.spec
+            <!-- weather-routes.ts -->
+    app.ts
+    app.html
+    app.specs
+    app.css
+    app-routes.ts
+environments
+main.ts
+index.html
+styles.css
